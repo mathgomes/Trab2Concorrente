@@ -3,7 +3,7 @@
 #include <string>
 
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
+//#include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include <omp.h>
@@ -35,7 +35,7 @@ int main( int argc, char** argv) {
     int imgType = atoi(argv[2]);
     src = imread( argv[1], imgType );
 
-    copyMakeBorder(src,src, top, bottom,left, right, borderType, value);
+    //copyMakeBorder(src,src, top, bottom,left, right, borderType, value);
     finImg = src.clone();
     
     tamLin = finImg.rows;
@@ -44,8 +44,10 @@ int main( int argc, char** argv) {
     bloco = tamLin/NUMTHREADS;
     resto = tamLin%NUMTHREADS;
 
+    copyMakeBorder( finImg, finImg, top, bottom, left, right, borderType, value );
+		
     /// grayScale image section
-    if( imgType == 0) {
+    if(imgType == 0) {
 
 	//percorrer o loop para cada bloco da imagem definida.
 	#pragma omp parallel for
@@ -53,7 +55,7 @@ int main( int argc, char** argv) {
 	   if(i == NUMTHREADS-1)
 	      mediaBlur(bloco*i, (bloco*(i+1)) - 1);
 	   else
-	      mediaBlur((bloco)*i, (bloco*(i+1)) - 1 + resto);
+	      mediaBlur(bloco*i, (bloco*(i+1)) - 1 + resto);
 	}
 
         finImg = finImg.colRange(3, (finImg.cols-3));
@@ -71,7 +73,8 @@ int main( int argc, char** argv) {
 
 		//insere a borda de tamanhos especificados
 		copyMakeBorder( dst[j], dst[j], top, bottom, left, right, borderType, value );
-		
+		copyMakeBorder( dst2[j], dst2[j], top, bottom, left, right, borderType, value );
+
 		//percorrer o loop para cada bloco da imagem definida.
 		#pragma omp parallel for
 		for(int i=0; i < NUMTHREADS; ++i){
@@ -107,10 +110,15 @@ int main( int argc, char** argv) {
 
 void mediaBlurRGB(int inicio, int fim, int indice){
 
-    int colSize = finImg.cols, sum;
+    int colSize = finImg.cols, sum, inicioLinha;
     double media;
 
-    for(int i = inicio+2; i < (fim-2); ++i){
+    if(inicio == 0)
+	inicioLinha = inicio + 2;
+    else
+        inicioLinha = inicio;
+
+    for(int i = inicioLinha; i < fim+2; ++i){
 
         for(int j = 2; j < (colSize-2); ++j){
             sum=0;
@@ -128,11 +136,16 @@ void mediaBlurRGB(int inicio, int fim, int indice){
 }
 
 void mediaBlur(int inicio, int fim){
-
-    int colSize = finImg.cols, sum;
+    
+    int colSize = finImg.cols, sum, inicioLinha;
     double media;
+    
+    if(inicio == 0)
+	inicioLinha = inicio + 2;
+    else
+        inicioLinha = inicio;
 
-    for(int i = inicio+2; i < (fim-2); ++i){
+    for(int i = inicioLinha; i < fim+2; ++i){
 
         for(int j = 2; j < (colSize-2); ++j){
             sum=0;
