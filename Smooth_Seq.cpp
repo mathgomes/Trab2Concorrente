@@ -19,8 +19,9 @@ int display_finImg(int delay, String&, Mat&);
 int main( int argc, char** argv) {
 
     /// General use variables
-    int DELAY_CAPTION = 1500, top = 2, bottom = 2, left = 2, right = 2, borderType = BORDER_CONSTANT;
+    int top = 2, bottom = 2, left = 2, right = 2, borderType = BORDER_CONSTANT;
     String window_name = "Smoothing ";
+    double tempo;
     Mat src, dst[3], finImg;
     clock_t itime, ftime;
 
