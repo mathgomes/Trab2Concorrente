@@ -7,6 +7,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include <omp.h>
+#include <cstdio>
 
 using namespace std;
 using namespace cv;
@@ -26,7 +27,7 @@ int main( int argc, char** argv) {
     /// General use variables
     int DELAY_CAPTION = 1500, top = 2, bottom = 2, left = 2, right = 2, borderType = BORDER_CONSTANT, tamLin, bloco, resto;
     String window_name = "Smoothing ";
-    
+    clock_t itime, ftime;
 
     ///Values that will be inserted in image border( solves border pixels problem )
     Scalar value( 0, 0, 0);
@@ -45,7 +46,7 @@ int main( int argc, char** argv) {
     resto = tamLin%NUMTHREADS;
 
     copyMakeBorder( finImg, finImg, top, bottom, left, right, borderType, value );
-		
+    itime = clock();
     /// grayScale image section
     if(imgType == 0) {
 
@@ -102,7 +103,10 @@ int main( int argc, char** argv) {
    	//if( display_finImg( DELAY_CAPTION,window_name,finImg) != 0 ) { return 0; }
     	//waitKey(0);
     }
-
+    
+ftime = clock();
+    tempo = (ftime-itime) / (CLOCKS_PER_SEC * 1.0);
+    printf("\nTempo : %lf\n",tempo);
 
     return 0;
 }
