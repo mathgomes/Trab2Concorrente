@@ -26,6 +26,7 @@ int main( int argc, char** argv) {
 
     /// General use variables
     int DELAY_CAPTION = 1500, top = 2, bottom = 2, left = 2, right = 2, borderType = BORDER_CONSTANT, tamLin, bloco, resto;
+    double tempo;
     String window_name = "Smoothing ";
     clock_t itime, ftime;
 
