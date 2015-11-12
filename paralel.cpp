@@ -99,8 +99,8 @@ int main( int argc, char** argv) {
 
 	/// Merge the three channels
 	merge(rgb, finImg);
-   	if( display_finImg( DELAY_CAPTION,window_name,finImg) != 0 ) { return 0; }
-    	waitKey(0);
+   	//if( display_finImg( DELAY_CAPTION,window_name,finImg) != 0 ) { return 0; }
+    	//waitKey(0);
     }
 
 
