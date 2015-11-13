@@ -1,0 +1,4 @@
+>>> cat host_file
+cetus1
+cetus3
+cetus4
