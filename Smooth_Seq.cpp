@@ -3,7 +3,6 @@
 #include <string>
 
 #include "opencv2/imgproc/imgproc.hpp"
-//#include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include <cstdio>
@@ -11,6 +10,7 @@
 using namespace std;
 using namespace cv;
 
+//Tamanho da área de cada pedaço a ser feita a filtragem na imagem.
 #define SQUARE_AREA 25
 
 Mat mediaBlur(Mat& img);
@@ -80,7 +80,7 @@ int main( int argc, char** argv) {
     return 0;
 }
 
-
+//Método que faz a filtragem na imagem.
 Mat mediaBlur(Mat &channel){
 
     int rowSize = channel.rows, colSize = channel.cols, sum;
@@ -102,13 +102,4 @@ Mat mediaBlur(Mat &channel){
         }
     }
     return channel;
-}
-
-
-int display_finImg(int delay, String &window_name, Mat &finImg){
-
-    imshow( window_name, finImg);
-    int c = waitKey ( delay );
-    if( c >= 0 ) { return -1; }
-    return 0;
 }
