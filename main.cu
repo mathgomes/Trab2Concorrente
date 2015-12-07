@@ -100,7 +100,7 @@ __device__ unsigned char smooth(unsigned char* pixel, int i, int j, int w, int h
 	
 	int l, k;
 	int sum;
-	int raio = KERNEL_SIZE/2;
+	int raio = 5/2;
 	
 	sum = 0;
 	for(l = i - raio; l <= i + raio; l++) {
